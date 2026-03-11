@@ -1,9 +1,11 @@
 "use client";
 
-import { Star, Quote } from "lucide-react";
+import { Star } from "lucide-react";
 import { motion } from "framer-motion";
+import { TestimonialsColumn, Testimonial } from "@/components/ui/testimonials-columns-1";
 
-const testimonials = [
+// Expanded to 9 to allow the 3-column scroll effect to look full. 
+const baseTestimonials = [
   {
     quote: "GrowthOven completely changed how we approach social media. Our engagement went from 2% to 18% in just two months.",
     name: "Sarah Chen",
@@ -24,18 +26,41 @@ const testimonials = [
   },
 ];
 
-const avatarColors = ["#0EA5E9", "#8B5CF6", "#EC4899"];
+const UnsplashImages = [
+  "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150", 
+  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150", 
+  "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=150",
+  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150",
+  "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=150",
+  "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=150",
+  "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&q=80&w=150",
+  "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=150",
+  "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&q=80&w=150"
+];
+
+const testimonials: Testimonial[] = [
+  ...baseTestimonials,
+  ...baseTestimonials,
+  ...baseTestimonials,
+].map((t, i) => ({
+  ...t,
+  image: UnsplashImages[i]
+}));
+
+const firstColumn = testimonials.slice(0, 3);
+const secondColumn = testimonials.slice(3, 6);
+const thirdColumn = testimonials.slice(6, 9);
 
 export default function Testimonials() {
   return (
-    <section id="testimonials" aria-labelledby="testimonials-heading" style={{ padding: "96px 0", background: "#F8FAFB" }}>
+    <section id="testimonials" aria-labelledby="testimonials-heading" style={{ padding: "96px 0", background: "#F8FAFB", overflow: "hidden" }}>
       <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "0 24px" }}>
         {/* Header */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: "24px", marginBottom: "56px" }}
         >
           <div>
@@ -57,52 +82,11 @@ export default function Testimonials() {
           </div>
         </motion.div>
 
-        {/* Cards */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "16px" }}>
-          {testimonials.map((t, i) => (
-            <motion.article
-              key={i}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ delay: i * 0.15, duration: 0.5, type: "spring", stiffness: 100, damping: 15 }}
-              className="flex flex-col p-7 bg-white border border-gray-200 rounded-[20px] transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-gray-300"
-            >
-              <Quote style={{ width: "32px", height: "32px", color: "#E5E7EB", marginBottom: "16px" }} aria-hidden="true" />
-
-              <div style={{ display: "flex", gap: "2px", marginBottom: "16px" }}>
-                {[...Array(t.rating)].map((_, j) => (
-                  <Star key={j} style={{ width: "13px", height: "13px", fill: "#F59E0B", color: "#F59E0B" }} aria-hidden="true" />
-                ))}
-              </div>
-
-              <blockquote style={{ fontSize: "15px", color: "#374151", lineHeight: 1.7, flex: 1, marginBottom: "20px" }}>
-                &ldquo;{t.quote}&rdquo;
-              </blockquote>
-
-              <div style={{ display: "flex", alignItems: "center", gap: "12px", paddingTop: "16px", borderTop: "1px solid #F3F4F6" }}>
-                <div style={{
-                  width: "40px",
-                  height: "40px",
-                  borderRadius: "50%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "13px",
-                  fontWeight: 700,
-                  color: "#fff",
-                  background: avatarColors[i],
-                  flexShrink: 0,
-                }}>
-                  {t.name.split(" ").map(n => n[0]).join("")}
-                </div>
-                <div>
-                  <div style={{ fontSize: "14px", fontWeight: 600, color: "#0A0A0A" }}>{t.name}</div>
-                  <div style={{ fontSize: "12px", color: "#9CA3AF" }}>{t.role}</div>
-                </div>
-              </div>
-            </motion.article>
-          ))}
+        {/* Animated Columns */}
+        <div className="flex justify-center gap-6 mt-10 [mask-image:linear-gradient(to_bottom,transparent,black_10%,black_90%,transparent)] h-[650px] overflow-hidden">
+          <TestimonialsColumn testimonials={firstColumn} duration={15} />
+          <TestimonialsColumn testimonials={secondColumn} className="hidden md:block" duration={19} />
+          <TestimonialsColumn testimonials={thirdColumn} className="hidden lg:block" duration={17} />
         </div>
       </div>
     </section>
