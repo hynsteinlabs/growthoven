@@ -29,13 +29,13 @@ export default function Hero() {
       <div className="absolute bottom-[-10%] left-[-5%] w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[120px] pointer-events-none -z-10" aria-hidden="true" />
       <div className="absolute top-[30%] left-[20%] w-[400px] h-[400px] bg-indigo-400/10 rounded-full blur-[120px] pointer-events-none -z-10" aria-hidden="true" />
 
-      <div style={{ position: "relative", zIndex: 10, width: "100%", maxWidth: "1300px", margin: "0 auto", padding: "140px 24px 60px" }}>
+      <div className="hero-container" style={{ position: "relative", zIndex: 10, width: "100%", maxWidth: "1300px", margin: "0 auto", padding: "140px 24px 60px" }}>
         
         {/* Two-column hero: Text Left + Image Right */}
-        <div style={{ display: "flex", alignItems: "center", gap: "60px", flexWrap: "wrap" }}>
+        <div className="hero-two-col" style={{ display: "flex", alignItems: "center", gap: "60px", flexWrap: "wrap" }}>
           
           {/* LEFT COLUMN — Text */}
-          <div style={{ flex: "1 1 680px", textAlign: "left" }}>
+          <div className="hero-text-col" style={{ flex: "1 1 380px", textAlign: "left" }}>
             {/* Badge */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
@@ -73,7 +73,6 @@ export default function Hero() {
                 fontSize: "clamp(2.4rem, 5vw, 4.2rem)", 
                 lineHeight: 1.08, 
                 color: "#0A0A0A",
-                textAlign: "left",
               }}
             >
               <span style={{ marginRight: "12px" }}>
@@ -121,6 +120,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.2, duration: 0.6 }}
+              className="hero-subtitle"
               style={{ marginTop: "28px", fontSize: "18px", color: "#6B7280", maxWidth: "480px", lineHeight: 1.7, textAlign: "left" }}
             >
               AI-powered competitor intelligence, viral content strategies, and automated scheduling — all in one platform.
@@ -131,6 +131,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.6, duration: 0.6, type: "spring", stiffness: 100, damping: 10 }}
+              className="hero-cta-row"
               style={{ marginTop: "40px", display: "flex", flexWrap: "wrap", alignItems: "center", gap: "16px" }}
             >
               <a
@@ -156,6 +157,7 @@ export default function Hero() {
             initial={{ opacity: 0, scale: 0.9, x: 40 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
             transition={{ delay: 0.8, duration: 0.8, type: "spring", stiffness: 80, damping: 16 }}
+            className="hero-image-col"
             style={{ 
               flex: "0 1 480px", 
               display: "flex", 
@@ -171,6 +173,95 @@ export default function Hero() {
               @keyframes hero-float-slow { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
               @keyframes hero-float-alt { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-8px) rotate(2deg); } }
               @keyframes hero-pulse-ring { 0% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.5; } 50% { transform: translate(-50%, -50%) scale(1.05); opacity: 0.3; } 100% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.5; } }
+
+              /* ── Tablet responsiveness (768px – 1023px) ── */
+              @media (min-width: 768px) and (max-width: 1023px) {
+                .hero-container {
+                  padding-top: 100px !important;
+                }
+                .hero-two-col {
+                  flex-direction: row !important;
+                  align-items: center !important;
+                  gap: 32px !important;
+                  flex-wrap: nowrap !important;
+                }
+                .hero-text-col {
+                  flex: 1 1 0% !important;
+                  min-width: 0 !important;
+                  text-align: left !important;
+                }
+                .hero-text-col h1 {
+                  font-size: clamp(1.8rem, 4vw, 2.6rem) !important;
+                  text-align: left !important;
+                }
+                .hero-subtitle {
+                  text-align: left !important;
+                  font-size: 15px !important;
+                  max-width: 380px !important;
+                }
+                .hero-cta-row {
+                  justify-content: flex-start !important;
+                }
+                .hero-image-col {
+                  flex: 0 0 320px !important;
+                  min-height: 340px !important;
+                }
+                .hero-badge-left {
+                  left: -10px !important;
+                }
+                .hero-badge-right-top {
+                  right: -10px !important;
+                }
+                .hero-badge-right-bottom {
+                  right: 5px !important;
+                }
+              }
+
+              /* ── Mobile (below 768px) ── */
+              @media (max-width: 767px) {
+                .hero-container {
+                  padding-top: 88px !important;
+                }
+                .hero-two-col {
+                  flex-direction: column !important;
+                  align-items: center !important;
+                  gap: 40px !important;
+                }
+                .hero-text-col {
+                  flex: 1 1 auto !important;
+                  width: 100% !important;
+                  text-align: center !important;
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                }
+                .hero-text-col h1 {
+                  text-align: center !important;
+                }
+                .hero-subtitle {
+                  text-align: center !important;
+                  max-width: 560px !important;
+                }
+                .hero-cta-row {
+                  justify-content: center !important;
+                }
+                .hero-image-col {
+                  flex: 0 1 auto !important;
+                  width: 100% !important;
+                  max-width: 340px !important;
+                  min-height: 280px !important;
+                  margin: 0 auto;
+                }
+                .hero-badge-left {
+                  left: 4px !important;
+                }
+                .hero-badge-right-top {
+                  right: 4px !important;
+                }
+                .hero-badge-right-bottom {
+                  right: 10px !important;
+                }
+              }
             `}</style>
 
             {/* Outer soft glow ring */}
@@ -232,6 +323,7 @@ export default function Hero() {
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 1.4, duration: 0.6, type: "spring" }}
+              className="hero-badge-left"
               style={{
                 position: "absolute",
                 bottom: "100px",
@@ -262,6 +354,7 @@ export default function Hero() {
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 1.8, duration: 0.6, type: "spring" }}
+              className="hero-badge-right-top"
               style={{
                 position: "absolute",
                 top: "40px",
@@ -292,6 +385,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 2.2, duration: 0.6 }}
+              className="hero-badge-right-bottom"
               style={{
                 position: "absolute",
                 bottom: "20px",
